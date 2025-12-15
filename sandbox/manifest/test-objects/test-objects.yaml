@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: test
-        image: docker pull penpotapp/backend:latest
+        image: penpotapp/backend:latest
         imagePullPolicy: Always
         ports:
         - containerPort:  7388
@@ -82,8 +82,8 @@ spec:
         #   failureThreshold: 3
         #   periodSeconds: 5
       restartPolicy: Always
-      imagePullSecrets:
-      - name : etz-ecr
+      # imagePullSecrets:
+      # - name : etz-ecr
       volumes:
       - name: test-volume
         projected:
