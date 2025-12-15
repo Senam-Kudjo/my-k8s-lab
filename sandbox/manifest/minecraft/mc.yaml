@@ -1,18 +1,18 @@
 apiVersion: v1   
 kind: Service
 metadata:
-  name: test-service
+  name: mc-service
   namespace: default
 spec:
   selector:
-    app: test
+    app: mc
   type: ClusterIP
   # sessionAffinity: None
   # sessionAffinityConfig:
   #   clientIP:
   #     timeoutSeconds: 10800
   ports:
-  - name: test
+  - name: mc
     protocol: TCP
     port: 25565
     targetPort: 25565
@@ -22,16 +22,16 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:  test-deployment
+  name:  mc-deployment
   namespace: default
   labels:
-    app: test
+    app: mc
 spec:
   minReadySeconds: 15
   revisionHistoryLimit: 5
   selector:
     matchLabels:
-      app: test
+      app: mc
   replicas: 1
   strategy:
     rollingUpdate:
@@ -41,22 +41,22 @@ spec:
   template:
     metadata:
       labels:
-        app: test
+        app: mc
     spec:
       containers:
-      - name: test
+      - name: mc
         image: lacledeslan/gamesvr-minecraft:java
         imagePullPolicy: Always
         ports:
         - containerPort:  25565
-          name: test
+          name: mc
         volumeMounts:
-        - name: test-volume
+        - name: mc-volume
           mountPath: /home/app/config
           readOnly: true
         envFrom:
         - configMapRef:
-            name: test-configmap
+            name: mc-configmap
         # resources:
         #   requests:
         #     cpu: 100m
@@ -85,11 +85,11 @@ spec:
       # imagePullSecrets:
       # - name : etz-ecr
       volumes:
-      - name: test-volume
+      - name: mc-volume
         projected:
           sources:
           - configMap:
-              name: test-configmap
+              name: mc-configmap
 
 
 ---
@@ -97,7 +97,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: test-configmap
+  name: mc-configmap
   namespace: default
 data:
 ---
@@ -105,7 +105,7 @@ data:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: test-ingress
+  name: mc-ingress
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
@@ -124,6 +124,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: test-service
+            name: mc-service
             port:
-              name: test
+              name: mc
