@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: test
-        image: penpotapp/backend:latest
+        image: lacledeslan/gamesvr-ut2004:latest
         imagePullPolicy: Always
         ports:
         - containerPort:  7388
