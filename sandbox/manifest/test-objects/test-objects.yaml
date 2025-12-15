@@ -44,8 +44,8 @@ spec:
         app: test
     spec:
       containers:
-      - name:  test
-        image:  842092678711.dkr.ecr.eu-west-1.amazonaws.com/gh-test-service:dev-1.0.0-SNAPSHOT-1
+      - name: test
+        image: docker pull penpotapp/backend:latest
         imagePullPolicy: Always
         ports:
         - containerPort:  7388
