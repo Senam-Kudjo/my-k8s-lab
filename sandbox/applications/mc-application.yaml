@@ -1,23 +1,23 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: mc-app
-  namespace: default
-  annotations:
-    notifications.argoproj.io/subscribe.on-sync-succeeded.teams: ArgoAlerts
-    notifications.argoproj.io/subscribe.on-sync-failed.teams: ArgoAlerts
-spec:
-  destination:
-    namespace: main-etranzact-sandbox
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: sandbox/manifest/minecraft
-    repoURL: 'https://github.com/Senam-Kudjo/my-k8s-lab.git'
-    targetRevision: HEAD
-  project: sandbox
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: mc-app
+#   namespace: default
+#   annotations:
+#     notifications.argoproj.io/subscribe.on-sync-succeeded.teams: ArgoAlerts
+#     notifications.argoproj.io/subscribe.on-sync-failed.teams: ArgoAlerts
+# spec:
+#   destination:
+#     namespace: main-etranzact-sandbox
+#     server: 'https://kubernetes.default.svc'
+#   source:
+#     path: sandbox/manifest/minecraft
+#     repoURL: 'https://github.com/Senam-Kudjo/my-k8s-lab.git'
+#     targetRevision: HEAD
+#   project: sandbox
+#   syncPolicy:
+#     syncOptions:
+#       - CreateNamespace=true
+#     automated:
+#       prune: true
+#       selfHeal: true
