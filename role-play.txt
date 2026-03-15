@@ -33,3 +33,36 @@ roleRef:
   kind: Role #this must be Role or ClusterRole
   name: pod-reader # this must match the name of the Role or ClusterRole you wish to bind to
   apiGroup: rbac.authorization.k8s.io
+
+controlplane ~/web-dashboard ➜ kubectl create serviceaccount dashboard-sa
+
+controlplane ~/web-dashboard ➜ kubectl create token dashboard-sa
+
+
+controlplane ~/web-dashboard ➜  cat deployment.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-dashboard
+  namespace: default
+  labels:
+    name: web-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: web-dashboard
+  template:
+    metadata:
+      labels:
+        name: web-dashboard
+    spec:
+      containers:
+      - name: web-dashboard
+        image: gcr.io/kodekloud/customimage/my-kubernetes-dashboard
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+      serviceAccountName: dashboard-sa
